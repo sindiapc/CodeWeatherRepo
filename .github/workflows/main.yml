@@ -12,16 +12,42 @@ on:
           - prod 
   
 jobs:  
+  set-environment:
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ steps.set-env.outputs.environment }}
+    steps:
+      - id: set-env
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "environment=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
+          else
+            echo "environment=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          fi
   print:  
     runs-on: ubuntu-latest  
+    environment: "uat"
+
     steps:  
       - name: Checkout  
         uses: actions/checkout@v2  
+      
+      - name: Set Environment Variables  
+        id: set_env_vars  
+        run: echo "Environment selected= ${{ github.event.inputs.environment }}"  
+
+      - id: set-env
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "environment=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
+          else
+            echo "environment=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          fi
   
       - name: Echo a Message  
         run: echo "This is a sample message from GitHub Actions"  
   
-      - name: Print Environment Variable  
+      - name: Print Environment Variable 
         run: echo "The value of MY_VARIABLE is ${{ vars.SINDIA_VARIABLE }}"  
         env:  
           MY_VARIABLE: ${{ vars.SINDIA_VARIABLE }}
