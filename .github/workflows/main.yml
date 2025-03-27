@@ -26,7 +26,8 @@ jobs:
           fi
   print:  
     runs-on: ubuntu-latest  
-    environment: ${{ github.event.inputs.environment }}
+    needs: set-environment 
+    #environment: ${{ github.event.inputs.environment }}
 
     steps:  
       - name: Checkout  
@@ -34,15 +35,7 @@ jobs:
       
       - name: Set Environment Variables  
         id: set_env_vars  
-        run: echo "Environment selected= ${{ github.event.inputs.environment }}"  
-
-      - id: set-env
-        run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            echo "environment=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
-          else
-            echo "environment=${{ github.ref_name }}" >> $GITHUB_OUTPUT
-          fi
+        run: echo "Environment selected= ${{ needs.set-environment.outputs.environment }}"  
   
       - name: Echo a Message  
         run: echo "This is a sample message from GitHub Actions"  
