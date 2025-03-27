@@ -26,7 +26,7 @@ jobs:
           fi
   print:  
     runs-on: ubuntu-latest  
-    environment: "uat"
+    environment: ${{ github.event.inputs.environment }}
 
     steps:  
       - name: Checkout  
