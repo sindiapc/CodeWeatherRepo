@@ -1,34 +1,29 @@
 name: Print Environment Value  
-  
-on:
-  workflow_dispatch:
-    inputs:
-        environment:
-          type: choice
-          description: 'Which environment will be deployed ?'   
-          required: true  
-          options:
-          - dev
-          - uat
-          - prod 
+on:  
+  workflow_dispatch:  
+    inputs:  
+      environment:  
+        type: choice  
+        description: 'Which environment will be deployed?'  
+        required: true  
+        options:  
+          - dev  
+          - uat  
+          - prod  
   
 jobs:  
   print:  
     runs-on: ubuntu-latest  
-  
-    environment:   
-      name: development  # Specify the environment from which you want to retrieve values  
-  
     steps:  
       - name: Checkout  
         uses: actions/checkout@v2  
   
       - name: Print Environment Variable  
         env:  
-          SINDIA_VARIABLE: ${{ vars.MY_VARIABLE }}  # Replace MY_VARIABLE with your variable name  
-        run: echo "Environment Secret Value: $SINDIA_VARIABLE" 
+          SINDIA_VARIABLE: ${{ vars.SINDIA_VARIABLE }}  # Replace SINDIA_VARIABLE with your variable name  
+        run: echo "Environment Variable Value: $SINDIA_VARIABLE"  
   
       - name: Print Environment Secret  
         env:  
-          SINDIA_SECRET: ${{ secrets.MY_SECRET }}  # Replace MY_SECRET with your secret name  
-        run: echo "Environment Secret Value: $SINDIA_SECRET"  
+          SINDIA_SECRET: ${{ secrets.SINDIA_SECRET }}  # Replace SINDIA_SECRET with your secret name  
+        run: echo "Environment Secret Value: $SINDIA_SECRET" 
