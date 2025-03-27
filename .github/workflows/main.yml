@@ -1,15 +1,9 @@
-name: Print Environment Value  
+name: Sample Workflow  
+  
 on:  
-  workflow_dispatch:  
-    inputs:  
-      environment:  
-        type: choice  
-        description: 'Which environment will be deployed?'  
-        required: true  
-        options:  
-          - dev  
-          - uat  
-          - prod  
+  push:  
+    branches:  
+      - main  
   
 jobs:  
   print:  
@@ -18,12 +12,10 @@ jobs:
       - name: Checkout  
         uses: actions/checkout@v2  
   
-      - name: Print Environment Variable  
-        env:  
-          SINDIA_VARIABLE: ${{ vars.SINDIA_VARIABLE }}  # Replace SINDIA_VARIABLE with your variable name  
-        run: echo "Environment Variable Value: $SINDIA_VARIABLE"  
+      - name: Echo a Message  
+        run: echo "This is a sample message from GitHub Actions"  
   
-      - name: Print Environment Secret  
+      - name: Print Environment Variable  
+        run: echo "The value of MY_VARIABLE is $MY_VARIABLE"  
         env:  
-          SINDIA_SECRET: ${{ secrets.SINDIA_SECRET }}  # Replace SINDIA_SECRET with your secret name  
-        run: echo "Environment Secret Value: $SINDIA_SECRET" 
+          MY_VARIABLE: HelloWorld 
