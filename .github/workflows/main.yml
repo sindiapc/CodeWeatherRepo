@@ -1,9 +1,15 @@
-name: Sample Workflow  
-  
+name: Print Environment Value  
 on:  
-  push:  
-    branches:  
-      - main  
+  workflow_dispatch:  
+    inputs:  
+      environment:  
+        type: choice  
+        description: 'Which environment will be deployed?'  
+        required: true  
+        options:  
+          - dev  
+          - uat  
+          - prod 
   
 jobs:  
   print:  
@@ -16,6 +22,6 @@ jobs:
         run: echo "This is a sample message from GitHub Actions"  
   
       - name: Print Environment Variable  
-        run: echo "The value of MY_VARIABLE is $MY_VARIABLE"  
+        run: echo "The value of MY_VARIABLE is ${{ vars.SINDIA_VARIABLE }}"  
         env:  
           MY_VARIABLE: HelloWorld 
